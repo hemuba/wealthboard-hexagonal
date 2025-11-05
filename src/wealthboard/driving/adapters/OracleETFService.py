@@ -1,13 +1,18 @@
-from wealthboard.driving.ports.ETFByName import ETFByName
+from wealthboard.driving.ports.ETFService import ETFService
 from wealthboard.domain.ETF import ETF
 from wealthboard.driven.adapters.OracleETFRepository import OracleETFRepository
 
-class OracleETFByName(ETFByName):
+class OracleETFByName(ETFService):
     
     def __init__(self, repo: OracleETFRepository):
         
         self._repo = repo
         
+    def fetchAll(self) -> list[ETF]:
+        return self._repo.fetchAll().values()
+       
+        
+    
     def findByTicker(self, ticker: str) -> ETF:
         tickers = set(t.lower() for t in self._repo.fetchAll().keys())
         if ticker.lower() in tickers:

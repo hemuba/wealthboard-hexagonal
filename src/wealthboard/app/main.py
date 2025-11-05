@@ -9,7 +9,7 @@ from wealthboard.domain.ETF import ETF
 from wealthboard.domain.OwnedETF import OwnedETF
 from wealthboard.driven.adapters.OracleETFRepository import OracleETFRepository
 from wealthboard.driven.adapters.OracleOwnedETFRepository import OracleOwnedETFRepository
-from wealthboard.driving.adapters.OracleETFByName import OracleETFByName
+from wealthboard.driving.adapters.OracleETFService import OracleETFByName
 
 load_dotenv()
 db_user = os.getenv("ORACLE_DB_USER")
@@ -26,6 +26,6 @@ repo = OracleETFRepository(usr=db_user, pwd=db_pwd, dsn=db_dsn)
 
 use_case = OracleETFByName(repo)
 
-eunl = use_case.findByTicker("EUnL.DE")
+eunl = use_case.findByTicker("jeTdi.DE")
+#all = use_case.fetchAll()
 print(eunl)
-
