@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 from wealthboard.domain.ETF import ETF
 from wealthboard.domain.OwnedETF import OwnedETF
 from wealthboard.driven.adapters.OracleETFRepository import OracleETFRepository
-from wealthboard.app.ETFService import ETFService
-
+from wealthboard.driven.adapters.OracleOwnedETFRepository import OracleOwnedETFRepository
+from wealthboard.driving.adapters.OracleETFByName import OracleETFByName
 
 load_dotenv()
 db_user = os.getenv("ORACLE_DB_USER")
@@ -23,8 +23,9 @@ logger = logging.getLogger(__name__)
 
 
 repo = OracleETFRepository(usr=db_user, pwd=db_pwd, dsn=db_dsn)
-service = ETFService(repo)
 
-for k, v in service.fetchAll().items():
-    if k == "EUNL.DE":
-        print(k, v)
+use_case = OracleETFByName(repo)
+
+eunl = use_case.findByTicker("EUnL.DE")
+print(eunl)
+
