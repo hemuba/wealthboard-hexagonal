@@ -9,7 +9,8 @@ from wealthboard.domain.ETF import ETF
 from wealthboard.domain.OwnedETF import OwnedETF
 from wealthboard.driven.adapters.OracleETFRepository import OracleETFRepository
 from wealthboard.driven.adapters.OracleOwnedETFRepository import OracleOwnedETFRepository
-from wealthboard.driving.adapters.OracleETFService import OracleETFByName
+from wealthboard.app.ETFService import ETFService
+from wealthboard.app.OwnedETFService import OwnedETFService
 
 load_dotenv()
 db_user = os.getenv("ORACLE_DB_USER")
@@ -23,9 +24,14 @@ logger = logging.getLogger(__name__)
 
 
 repo = OracleETFRepository(usr=db_user, pwd=db_pwd, dsn=db_dsn)
+repo_owned = OracleOwnedETFRepository(usr=db_user, pwd=db_pwd, dsn=db_dsn)
+etf_service = ETFService(repo)
+owned_etf_service = OwnedETFService(repo_owned)
 
-use_case = OracleETFByName(repo)
-
-eunl = use_case.findByTicker("jeTdi.DE")
+eunl = etf_service.findByTicker("jedi.DE")
+all_owned = owned_etf_service.fetchAll()
 #all = use_case.fetchAll()
-print(eunl)
+
+for t in all_owned:
+    print(t)
+

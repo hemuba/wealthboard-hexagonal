@@ -1,10 +1,9 @@
-from wealthboard.driving.ports.ETFService import ETFService
 from wealthboard.domain.ETF import ETF
-from wealthboard.driven.adapters.OracleETFRepository import OracleETFRepository
+from wealthboard.driven.ports.ETFRepository import ETFRepository
 
-class OracleETFByName(ETFService):
+class ETFService():
     
-    def __init__(self, repo: OracleETFRepository):
+    def __init__(self, repo: ETFRepository):
         
         self._repo = repo
         
