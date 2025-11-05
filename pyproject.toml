@@ -1,7 +1,7 @@
 [project]
-name = "wealthboard-hexagonal"     # Nome del package
-version = "0.1.0"                  # Versione
-requires-python = ">=3.12"         # Versione minima di Python
+name = "wealthboard-hexagonal"
+version = "0.1.0"
+requires-python = ">=3.12"
 
 dependencies = [
     "yfinance",
@@ -12,14 +12,14 @@ dependencies = [
 
 	
 [build-system]
-requires = ["setuptools", "wheel"] # Tool di build
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.package-dir]
-"" = "src"                         # Tutto il codice è sotto /src
+"" = "src"
 	
 [tool.setuptools.packages.find]
-where = ["src"]                    # Cerca i package in /src
+where = ["src"]
 
 #[project.scripts]
 # tbd
