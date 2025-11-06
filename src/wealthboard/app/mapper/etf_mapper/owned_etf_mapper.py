@@ -10,7 +10,7 @@ class OwnedETFMapper:
             ticker=dto.ticker.upper(),
             no_of_shares=dto.no_of_shares,
             purchase_price=dto.p_price,
-            current_price=dto.p_price
+            current_price=dto.c_price
         )
     
     @staticmethod
