@@ -33,3 +33,7 @@ class OwnedETF:
     
     def __str__(self):
         return f"{self.ticker}: {self.no_of_shares}, {self.purchase_price}, {self.current_price}, {self.current_return}, {self.current_total}"
+    
+    
+    def __repr__(self):
+        return str(self)
