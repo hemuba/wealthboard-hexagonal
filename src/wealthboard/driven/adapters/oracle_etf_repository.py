@@ -1,7 +1,7 @@
 from wealthboard.driven.ports.etf_repository import ETFRepository
 import oracledb as odb
 from wealthboard.domain.etf import ETF
-from wealthboard.driven.db.connection_provider import ConnectionProvider
+from wealthboard.infrastructure.db.connection_provider import ConnectionProvider
 
 class OracleETFRepository(ETFRepository):
     

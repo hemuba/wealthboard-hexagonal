@@ -1,6 +1,6 @@
 from wealthboard.driven.ports.owned_etf_repository import OwnedETFRepository
 from wealthboard.domain.owned_etf import OwnedETF
-from wealthboard.driven.db.connection_provider import ConnectionProvider
+from wealthboard.infrastructure.db.connection_provider import ConnectionProvider
 
 class OracleOwnedETFRepository(OwnedETFRepository):
     
