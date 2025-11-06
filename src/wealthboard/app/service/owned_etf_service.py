@@ -1,5 +1,5 @@
-from wealthboard.driven.ports.OwnedETFRepository import OwnedETFRepository
-from wealthboard.domain.OwnedETF import OwnedETF
+from wealthboard.driven.ports.owned_etf_repository import OwnedETFRepository
+from wealthboard.domain.owned_etf import OwnedETF
 
 class OwnedETFService:
 
@@ -16,3 +16,6 @@ class OwnedETFService:
             return self._repo.fetchAll()[ticker.upper()]
         else:
             raise ValueError(f"Ticker {ticker} not found in the repository")
+        
+    def addEtf(self, etf:OwnedETF):
+        self._repo.addEtf(etf)

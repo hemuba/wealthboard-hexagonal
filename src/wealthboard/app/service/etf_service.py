@@ -1,7 +1,7 @@
-from wealthboard.domain.ETF import ETF
-from wealthboard.driven.ports.ETFRepository import ETFRepository
+from wealthboard.domain.etf import ETF
+from wealthboard.driven.ports.etf_repository import ETFRepository
 
-class ETFService():
+class ETFService:
     
     def __init__(self, repo: ETFRepository):
         
@@ -9,12 +9,17 @@ class ETFService():
         
     def fetchAll(self) -> list[ETF]:
         return self._repo.fetchAll().values()
-       
-        
     
-    def findByTicker(self, ticker: str) -> ETF:
+    
+    def exists(self, ticker: str) -> bool:
         tickers = set(t.lower() for t in self._repo.fetchAll().keys())
         if ticker.lower() in tickers:
+            return True
+        else:
+            return False
+        
+    def findByTicker(self, ticker: str) -> ETF:
+        if ETFService.exists(ticker):
             return self._repo.fetchAll()[ticker.upper()]
         else:
             raise ValueError(f"Ticker {ticker} not found in the repository")

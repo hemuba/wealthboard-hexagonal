@@ -6,3 +6,4 @@ class ETFRepository(ABC):
     def fetchAll(self):
         """Returns all the known ETF"""
         pass
+    

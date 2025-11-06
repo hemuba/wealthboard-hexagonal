@@ -1,18 +1,17 @@
-from wealthboard.driven.ports.ETFRepository import ETFRepository
+from wealthboard.driven.ports.etf_repository import ETFRepository
 import oracledb as odb
-from wealthboard.domain.ETF import ETF
+from wealthboard.domain.etf import ETF
+from wealthboard.driven.db.connection_provider import ConnectionProvider
 
 class OracleETFRepository(ETFRepository):
     
-    def __init__(self, usr: str, pwd: str, dsn: str):
-        self._usr = usr
-        self._pwd = pwd
-        self._dsn = dsn
+    def __init__(self, provider = ConnectionProvider):
+        self._provider = provider
 
     
     def fetchAll(self):
         
-        conn = odb.connect(user=self._usr, password=self._pwd, dsn=self._dsn)
+        conn = self._provider.get_oracledb_connection()
         cur = conn.cursor()
         cur.execute("""SELECT TICKER, COMPANY_NAME, EXCHANGE, THEME FROM ETF""")
         etf: dict = {}
@@ -26,6 +25,5 @@ class OracleETFRepository(ETFRepository):
         cur.close()
         conn.close()
         return etf
-        
-        
+ 
         
