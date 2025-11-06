@@ -1,7 +1,7 @@
-from wealthboard.app.dto.owned_etf_dto import OwnedETFDTO
-from wealthboard.domain.owned_etf import OwnedETF
+from wealthboard.app.dto.etf_dto.owned_etf_dto import OwnedETFDTO
+from wealthboard.domain.etf.owned_etf import OwnedETF
 
-class OwendETFMapper:
+class OwnedETFMapper:
     
     @staticmethod
     def to_entity(dto: OwnedETFDTO) -> OwnedETF:

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from wealthboard.domain.owned_etf import OwnedETF
+from wealthboard.domain.etf.owned_etf import OwnedETF
 
 class OwnedETFRepository(ABC):
     

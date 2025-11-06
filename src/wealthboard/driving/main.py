@@ -3,20 +3,19 @@ from dotenv import load_dotenv
 from logging import getLogger
 
 from wealthboard.driven.adapters.yfinance_price_provider import YFinancePriceProvider
-from wealthboard.driven.adapters.oracle_etf_repository import OracleETFRepository
-from wealthboard.driven.adapters.oracle_owned_etf_repository import OracleOwnedETFRepository
-from wealthboard.app.service.etf_service import ETFService
-from wealthboard.app.service.owned_etf_service import OwnedETFService
+from wealthboard.driven.adapters.etf_adapters.oracle_etf_repository import OracleETFRepository
+from wealthboard.driven.adapters.etf_adapters.oracle_owned_etf_repository import OracleOwnedETFRepository
+from wealthboard.app.service.etf_services.etf_service import ETFService
+from wealthboard.app.service.etf_services.owned_etf_service import OwnedETFService
 from wealthboard.infrastructure.db.connection_provider import ConnectionProvider
-from wealthboard.app.use_cases.add_owned_etf import AddOwnedETFUseCase
+from wealthboard.app.use_cases.etf_use_cases.add_owned_etf import AddOwnedETFUseCase
 from wealthboard.infrastructure.logging.log_config import setupLogging
-from wealthboard.app.dto.owned_etf_dto import OwnedETFDTO
+from wealthboard.app.dto.etf_dto.owned_etf_dto import OwnedETFDTO
 
 
 # === BASE SETUP ===
 load_dotenv()
 setupLogging()
-logger = getLogger(__name__)
 
 db_user = os.getenv("ORACLE_DB_USER")
 db_pwd = os.getenv("ORACLE_DB_PASSWORD")
@@ -44,9 +43,9 @@ dto = OwnedETFDTO(
 )
 
 all_owned = owned_etf_service.get_percentage_return()
+for k, v in all_owned.items():
+    print(k, v)
 
-find_ticker = owned_etf_service.findByTicker("EUnl.DE")
-print(find_ticker)
 
 # for k, v in all_owned.items():
 #     print(k, v)

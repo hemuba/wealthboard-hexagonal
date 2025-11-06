@@ -1,5 +1,5 @@
-from wealthboard.domain.etf import ETF
-from wealthboard.driven.ports.etf_repository import ETFRepository
+from wealthboard.domain.etf.etf import ETF
+from wealthboard.driven.ports.etf_ports.etf_repository import ETFRepository
 
 class ETFService:
     
