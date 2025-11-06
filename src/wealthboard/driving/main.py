@@ -43,10 +43,10 @@ dto = OwnedETFDTO(
     c_price=80.2
 )
 
-all_owned = owned_etf_service.fetchAll()
+all_owned = owned_etf_service.get_percentage_return()
 
-for t in all_owned:
-    print(t)
+for k, v in all_owned.items():
+    print(k, v)
 
 # == EXEC ==
 #use_case.execute(dto)

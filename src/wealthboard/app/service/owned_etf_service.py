@@ -30,11 +30,10 @@ class OwnedETFService:
         for t in self.fetchAll():
             current_prices[t.ticker] = self._price_provider.get_current_price(t.ticker)
         return current_prices
+
     
-    def get_price_diff(self):
-        diffs = {}
+    def get_percentage_return(self):
+        current_percentage_return = {}
         for t in self.fetchAll():
-            ticker = t.ticker
-            old_price = t.current_price
-            diffs[ticker] = self._price_provider.get_current_price(ticker) - old_price
-        return diffs
+            current_percentage_return[t.ticker] = round((t.current_price / t.purchase_price - 1) * 100, 2) 
+        return dict(sorted(current_percentage_return.items(), key=lambda x: x[1], reverse=True))
