@@ -19,7 +19,7 @@ class ETFService:
             return False
         
     def findByTicker(self, ticker: str) -> ETF:
-        if ETFService.exists(ticker):
+        if self.exists(ticker):
             return self._repo.fetchAll()[ticker.upper()]
         else:
             raise ValueError(f"Ticker {ticker} not found in the repository")

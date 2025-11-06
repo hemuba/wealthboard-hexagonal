@@ -33,7 +33,7 @@ class OracleOwnedETFRepository(OwnedETFRepository):
             VALUES(:1, :2, :3, :4)""",
         (etf.ticker, etf.no_of_shares, etf.purchase_price, etf.current_price)
         )
-
+        conn.commit()
         cur.close()
         conn.close()
         
