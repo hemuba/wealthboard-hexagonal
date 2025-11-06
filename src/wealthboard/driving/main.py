@@ -45,8 +45,11 @@ dto = OwnedETFDTO(
 
 all_owned = owned_etf_service.get_percentage_return()
 
-for k, v in all_owned.items():
-    print(k, v)
+find_ticker = owned_etf_service.findByTicker("EUnl.DE")
+print(find_ticker)
+
+# for k, v in all_owned.items():
+#     print(k, v)
 
 # == EXEC ==
 #use_case.execute(dto)
