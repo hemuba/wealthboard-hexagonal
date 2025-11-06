@@ -2,9 +2,7 @@ import os
 from dotenv import load_dotenv
 from logging import getLogger
 
-from wealthboard.driving.adapters.yfinance_price_provider import YFinancePriceProvider
-from wealthboard.domain.etf import ETF
-from wealthboard.domain.owned_etf import OwnedETF
+from wealthboard.driven.adapters.yfinance_price_provider import YFinancePriceProvider
 from wealthboard.driven.adapters.oracle_etf_repository import OracleETFRepository
 from wealthboard.driven.adapters.oracle_owned_etf_repository import OracleOwnedETFRepository
 from wealthboard.app.service.etf_service import ETFService
@@ -45,10 +43,10 @@ dto = OwnedETFDTO(
     c_price=80.2
 )
 
-diffs = owned_etf_service.get_price_diff()
+all_owned = owned_etf_service.fetchAll()
 
-for k, v in diffs.items():
-    print(k, v)
+for t in all_owned:
+    print(t)
 
 # == EXEC ==
 #use_case.execute(dto)

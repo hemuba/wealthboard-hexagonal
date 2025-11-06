@@ -1,12 +1,7 @@
 import yfinance as yf
 import logging
 
-from wealthboard.driving.ports.price_provider import PriceProvider
-
-
-
-    
-
+from wealthboard.driven.ports.price_provider import PriceProvider
     
     
 class YFinancePriceProvider(PriceProvider):

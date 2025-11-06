@@ -11,14 +11,13 @@ class OracleOwnedETFRepository(OwnedETFRepository):
     def fetchAll(self) -> dict[OwnedETF.ticker, OwnedETF]:
         conn = self._provider.get_oracledb_connection()
         cur = conn.cursor()
-        cur.execute("""SELECT TICKER, NO_OF_SHARES, PURCHASE_PRICE, CURRENT_PRICE FROM CURRENT_ETF""")
+        cur.execute("""SELECT TICKER, NO_OF_SHARES, PURCHASE_PRICE FROM CURRENT_ETF""")
         ownedEtf: dict = {}
-        for ticker, no_of_shares, p_price, c_price in cur:
+        for ticker, no_of_shares, p_price in cur:
             ownedEtf[ticker] =  OwnedETF(
                 ticker,
                 no_of_shares,
                 p_price,
-                c_price
             )
         cur.close()
         conn.close()
@@ -29,9 +28,9 @@ class OracleOwnedETFRepository(OwnedETFRepository):
         conn = self._provider.get_oracledb_connection()
         cur = conn.cursor()
         cur.execute(
-            """INSERT INTO CURRENT_ETF(TICKER, NO_OF_SHARES, PURCHASE_PRICE, CURRENT_PRICE)
-            VALUES(:1, :2, :3, :4)""",
-        (etf.ticker, etf.no_of_shares, etf.purchase_price, etf.current_price)
+            """INSERT INTO CURRENT_ETF(TICKER, NO_OF_SHARES, PURCHASE_PRICE)
+            VALUES(:1, :2, :3)""",
+        (etf.ticker, etf.no_of_shares, etf.purchase_price)
         )
         conn.commit()
         cur.close()

@@ -1,10 +1,12 @@
+from wealthboard.driven.ports.price_provider import PriceProvider
+
 class OwnedETF:
     
-    def __init__(self, ticker:str, no_of_shares:float, purchase_price:float, current_price:float):
+    def __init__(self, ticker:str, no_of_shares:float, purchase_price:float):
         self._ticker = ticker
         self._no_of_shares = no_of_shares
         self._purchase_price = purchase_price
-        self._current_price = current_price
+        self._current_price = None
         
     @property
     def ticker(self):
@@ -20,8 +22,11 @@ class OwnedETF:
         return self._purchase_price
     
     @property
-    def current_price(self):
-        return self._current_price
+    def current_price(self): return self._current_price
+
+    @current_price.setter
+    def current_price(self, value: float):
+        self._current_price = round(value, 2)
     
     @property
     def current_return(self):

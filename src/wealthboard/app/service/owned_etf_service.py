@@ -1,6 +1,6 @@
 from wealthboard.driven.ports.owned_etf_repository import OwnedETFRepository
 from wealthboard.domain.owned_etf import OwnedETF
-from wealthboard.driving.ports.price_provider import PriceProvider
+from wealthboard.driven.ports.price_provider import PriceProvider
 
 class OwnedETFService:
 
@@ -9,9 +9,12 @@ class OwnedETFService:
         self._repo = repo
         self._price_provider = price_provider
         
-    def fetchAll(self) -> list[OwnedETF]:
-        return list(self._repo.fetchAll().values())
-    
+    def fetchAll(self):
+        etfs = list(self._repo.fetchAll().values())
+        for e in etfs:
+            e.current_price = self._price_provider.get_current_price(e.ticker)
+        return etfs
+
     def findByTicker(self, ticker: str) -> OwnedETF:
         tickers = set(t.lower() for t in self._repo.fetchAll().keys())
         if ticker.lower() in tickers:
