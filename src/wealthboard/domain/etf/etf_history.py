@@ -7,7 +7,6 @@ class ETFHistory:
         self._open_price = open_price
         self._close_price = close_price
         self._volume = volume
-        self._current_price = None
         
     @property
     def data(self):
@@ -30,7 +29,7 @@ class ETFHistory:
         return self._volume
     
     def __str__(self):
-        return f"{self.data} - {self.ticker}: {self.open_price}, {self.close_price}, {self.volume}, {self._current_price}"
+        return f"{self.data} - {self.ticker}: {self.open_price}, {self.close_price}, {self.volume}"
     
     def __repr__(self):
         return str(self)

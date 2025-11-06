@@ -10,6 +10,8 @@ from wealthboard.infrastructure.db.connection_provider import ConnectionProvider
 from wealthboard.app.use_cases.etf_use_cases.add_owned_etf import AddOwnedETFUseCase
 from wealthboard.infrastructure.logging.log_config import setupLogging
 from wealthboard.app.dto.etf_dto.owned_etf_dto import OwnedETFDTO
+from wealthboard.adapters.driven.etf_adapters.oracle_etf_history_repository import OracleETFHistoryRepository
+from wealthboard.app.service.etf_services.etf_history_service import ETFHistoryService
 
 
 # === BASE SETUP ===
@@ -26,9 +28,11 @@ price_provider = YFinancePriceProvider()
 
 repo_owned = OracleOwnedETFRepository(provider)
 repo_etf = OracleETFRepository(provider)
+repo_history = OracleETFHistoryRepository(provider)
 
 owned_etf_service = OwnedETFService(repo_owned, price_provider)
 etf_service = ETFService(repo_etf)
+history_service = ETFHistoryService(repo_history, price_provider)
 # === USE_CASE ===
 
 use_case = AddOwnedETFUseCase(etf_service=etf_service, owned_service=owned_etf_service)
@@ -40,9 +44,10 @@ dto = OwnedETFDTO(
     p_price=75.8,
 )
 
-all_owned = owned_etf_service.get_percentage_return()
-for k, v in all_owned.items():
-    print(k, v)
+ticker_from_date = history_service.fetchByTickerFromDate("JEDI.DE", "21-AUG-2025")
+
+for r in ticker_from_date:
+    print(r)
 
 
 # for k, v in all_owned.items():
