@@ -5,4 +5,3 @@ class OwnedETFDTO:
     ticker: str
     no_of_shares: float
     p_price: float
-    c_price: float

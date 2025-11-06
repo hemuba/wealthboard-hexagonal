@@ -1,5 +1,3 @@
-from wealthboard.driven.ports.price_provider import PriceProvider
-
 class OwnedETF:
     
     def __init__(self, ticker:str, no_of_shares:float, purchase_price:float):

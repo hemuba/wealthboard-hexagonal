@@ -1,4 +1,4 @@
-from wealthboard.driven.ports.etf_ports.owned_etf_repository import OwnedETFRepository
+from wealthboard.app.ports.etf_ports.owned_etf_repository import OwnedETFRepository
 from wealthboard.domain.etf.owned_etf import OwnedETF
 from wealthboard.infrastructure.db.connection_provider import ConnectionProvider
 

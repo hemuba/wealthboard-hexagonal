@@ -1,10 +1,9 @@
 import os
 from dotenv import load_dotenv
-from logging import getLogger
 
-from wealthboard.driven.adapters.yfinance_price_provider import YFinancePriceProvider
-from wealthboard.driven.adapters.etf_adapters.oracle_etf_repository import OracleETFRepository
-from wealthboard.driven.adapters.etf_adapters.oracle_owned_etf_repository import OracleOwnedETFRepository
+from wealthboard.adapters.driven.yfinance_price_provider import YFinancePriceProvider
+from wealthboard.adapters.driven.etf_adapters.oracle_etf_repository import OracleETFRepository
+from wealthboard.adapters.driven.etf_adapters.oracle_owned_etf_repository import OracleOwnedETFRepository
 from wealthboard.app.service.etf_services.etf_service import ETFService
 from wealthboard.app.service.etf_services.owned_etf_service import OwnedETFService
 from wealthboard.infrastructure.db.connection_provider import ConnectionProvider
@@ -39,7 +38,6 @@ dto = OwnedETFDTO(
     ticker="CVBDW",
     no_of_shares=1,
     p_price=75.8,
-    c_price=80.2
 )
 
 all_owned = owned_etf_service.get_percentage_return()
