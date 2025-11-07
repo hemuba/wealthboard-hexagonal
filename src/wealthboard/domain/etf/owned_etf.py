@@ -1,5 +1,5 @@
 class OwnedETF:
-    
+    __slots__ = ("_ticker", "_no_of_shares", "_purchase_price", "_current_price")
     def __init__(self, ticker:str, no_of_shares:float, purchase_price:float):
         self._ticker = ticker
         self._no_of_shares = no_of_shares

@@ -58,7 +58,7 @@ for i in range(1, len(mm_jedi)):
 
 eunl_std_dev = use_case_metrics.calculate_std_deviation(ticker="EUNL.DE", date="01-FEB-2024")
 
-print(round(eunl_std_dev*100, 2))
+print(round(eunl_std_dev, 2))
 
 
 # for k, v in all_owned.items():

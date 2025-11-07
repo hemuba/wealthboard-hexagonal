@@ -1,5 +1,5 @@
 class ETF:
-    
+    __slots__ = ("_ticker", "_company_name", "_exchange", "_theme")
     def __init__(self, ticker, company_name, exchange, theme):
         self._ticker = ticker
         self._company_name = company_name

@@ -1,6 +1,6 @@
 from datetime import datetime
 class ETFHistory:
-    
+    __slots__ = ("_data", "_ticker", "_open_price", "_close_price", "_volume")
     def __init__(self, data:datetime, ticker:str, open_price:float, close_price:float, volume:float):
         self._data = data
         self._ticker = ticker

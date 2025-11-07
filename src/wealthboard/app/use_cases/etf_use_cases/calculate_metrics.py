@@ -29,5 +29,5 @@ class CalculateMetrics:
         for i in range(len(data)):
             sq_deviation_sum += (data[i] - ma) ** 2
         variance = sq_deviation_sum / (len(data) - 1)
-        std_dev = variance ** 0.5
+        std_dev = (variance ** 0.5) * 100
         return std_dev
