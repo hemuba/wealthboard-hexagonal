@@ -56,8 +56,9 @@ for i in range(1, len(mm_jedi)):
     else:
         mm_test[mm_jedi[i]] = "UP"
 
-for k, v in mm_test.items():
-    print(round(k, 2),v)
+eunl_std_dev = use_case_metrics.calculate_std_deviation(ticker="EUNL.DE", date="01-FEB-2024")
+
+print(round(eunl_std_dev*100, 2))
 
 
 # for k, v in all_owned.items():

@@ -11,3 +11,16 @@ class ETFHistoryService:
     def fetchByTickerFromDate(self, ticker: str, date: str ) -> list[ETFHistory]:
         return sorted(list(self._repo.fetchByTickerFromDate(ticker, date).values()), key=lambda x: (x[0], x[1]))
     
+    def get_temporal_serie(self, ticker:str, date:str):
+        data = self.fetchByTickerFromDate(ticker, date)
+        temporal_serie = [t[3] for t in data]
+        return temporal_serie
+    
+    def calculate_percentage_return(self, ticker:str, date: str) -> list[float]:
+        pct_returns = []
+        temporal_serie = self.get_temporal_serie(ticker, date)
+        for i in range(1, len(temporal_serie)):
+            pct_returns.append(temporal_serie[i] / temporal_serie[i-1] - 1)
+        return pct_returns
+            
+        
