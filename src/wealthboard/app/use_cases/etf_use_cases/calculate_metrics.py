@@ -13,9 +13,7 @@ class CalculateMetrics:
         windows_mmi = []
         if not K:
             K = 2
-        data = sorted(
-            self._historical_service.fetchByTickerFromDate(ticker, date)
-            , key=lambda x: (x[0], x[1]))
+        data = self._historical_service.fetchByTickerFromDate(ticker, date)
         temporal_serie = [t[3] for t in data]
         for i in range(len(temporal_serie) - K + 1):
             window = temporal_serie[i:i+K]

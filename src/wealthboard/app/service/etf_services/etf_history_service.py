@@ -9,5 +9,5 @@ class ETFHistoryService:
         self._price_provider = price_provider
         
     def fetchByTickerFromDate(self, ticker: str, date: str ) -> list[ETFHistory]:
-        return list(self._repo.fetchByTickerFromDate(ticker, date).values())
+        return sorted(list(self._repo.fetchByTickerFromDate(ticker, date).values()), key=lambda x: (x[0], x[1]))
     
