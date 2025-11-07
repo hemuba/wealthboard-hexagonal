@@ -12,7 +12,7 @@ from wealthboard.infrastructure.logging.log_config import setupLogging
 from wealthboard.app.dto.etf_dto.owned_etf_dto import OwnedETFDTO
 from wealthboard.adapters.driven.etf_adapters.oracle_etf_history_repository import OracleETFHistoryRepository
 from wealthboard.app.service.etf_services.etf_history_service import ETFHistoryService
-
+from wealthboard.app.use_cases.etf_use_cases.calculate_metrics import CalculateMetrics
 
 # === BASE SETUP ===
 load_dotenv()
@@ -37,6 +37,9 @@ history_service = ETFHistoryService(repo_history, price_provider)
 
 use_case = AddOwnedETFUseCase(etf_service=etf_service, owned_service=owned_etf_service)
 
+
+use_case_metrics = CalculateMetrics(historical_service=history_service, owned_sevice=owned_etf_service)
+
 # TEST DTO
 dto = OwnedETFDTO(
     ticker="CVBDW",
@@ -44,10 +47,17 @@ dto = OwnedETFDTO(
     p_price=75.8,
 )
 
-ticker_from_date = history_service.fetchByTickerFromDate("JEDI.DE", "21-AUG-2025")
+mm_jedi = use_case_metrics.calculate_moving_average("JEDI.DE", "21-OCT-2024")
 
-for r in ticker_from_date:
-    print(r)
+mm_test = {}
+for i in range(1, len(mm_jedi)):
+    if mm_jedi[i-1] < mm_jedi[i]:
+        mm_test[mm_jedi[i]] = "DOWN"
+    else:
+        mm_test[mm_jedi[i]] = "UP"
+
+for k, v in mm_test.items():
+    print(round(k, 2),v)
 
 
 # for k, v in all_owned.items():
