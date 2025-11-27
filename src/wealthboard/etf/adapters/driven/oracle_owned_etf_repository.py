@@ -1,10 +1,10 @@
 from wealthboard.etf.app.ports.owned_etf_repository import OwnedETFRepository
 from wealthboard.etf.domain.owned_etf import OwnedETF
-from wealthboard.common.infrastructure.db.connection_provider import ConnectionProvider
+from wealthboard.common.infrastructure.db.oracle_connection_provider import OracleConnectionProvider
 
 class OracleOwnedETFRepository(OwnedETFRepository):
     
-    def __init__(self, provider:ConnectionProvider):
+    def __init__(self, provider:OracleConnectionProvider):
         
         self._provider = provider
         
@@ -36,4 +36,5 @@ class OracleOwnedETFRepository(OwnedETFRepository):
         cur.close()
         conn.close()
         
-        
+
+	

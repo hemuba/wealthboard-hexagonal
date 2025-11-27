@@ -5,6 +5,13 @@ class CalculateMetrics:
     def __init__(self, owned_sevice: OwnedETFService, historical_service: ETFHistoryService):
         self._owned_service = owned_sevice
         self._historical_service = historical_service
+        
+    def calculate_percentage_return(self, ticker:str, date: str) -> list[float]: 
+        pct_returns = [] 
+        temporal_serie = self._historical_service.get_temporal_serie(ticker, date) 
+        for i in range(1, len(temporal_serie)): 
+            pct_returns.append(temporal_serie[i] / temporal_serie[i-1] - 1) 
+        return pct_returns
   
     def calculate_moving_average(self, ticker:str, date: str, K:int=None) -> list[float]:
         temporal_serie = self._historical_service.get_temporal_serie(ticker, date)
@@ -18,7 +25,7 @@ class CalculateMetrics:
         
     
     def calculate_std_deviation(self, ticker:str, date: str) -> float:
-        data = self._historical_service.calculate_percentage_return(ticker, date)
+        data = self.calculate_percentage_return(ticker, date)
         if len(data) < 2:
             return 0.0
         ma = sum(data) / len(data)
@@ -28,3 +35,6 @@ class CalculateMetrics:
         variance = sq_deviation_sum / (len(data) - 1)
         std_dev = (variance ** 0.5) * 100
         return round(std_dev, 2)
+    
+    
+    

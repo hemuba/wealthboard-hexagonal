@@ -1,6 +1,6 @@
 import oracledb as odb
 
-class ConnectionProvider:
+class OracleConnectionProvider:
     def __init__(self, usr:str, pwd:str, dsn:str):
         
         self._usr = usr

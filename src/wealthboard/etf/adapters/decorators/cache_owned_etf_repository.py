@@ -1,7 +1,7 @@
 from wealthboard.etf.app.ports.owned_etf_repository import OwnedETFRepository
 from wealthboard.etf.domain.owned_etf import OwnedETF
 
-class CachedOwnedETFRepository(OwnedETFRepository):
+class CacheOwnedETFRepository(OwnedETFRepository):
     
     def __init__(self, wrapped_repo:OwnedETFRepository):
         self._wrapped_repo = wrapped_repo
