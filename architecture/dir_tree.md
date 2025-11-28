@@ -8,6 +8,10 @@ C:.
 │   pyproject.toml
 │   README.md
 │
+├───architecture
+│       dir_tree.md
+│       module_view.md
+│
 ├───logs
 │       wealthboard-hexagonal.log
 │
@@ -16,10 +20,6 @@ C:.
 │   ├───wealthboard
 │   │   │   main.py
 │   │   │   __init__.py
-│   │   │
-│   │   ├───architecture
-│   │   │       dir_tree.md
-│   │   │       module_view.md
 │   │   │
 │   │   ├───common
 │   │   │   ├───adapters
