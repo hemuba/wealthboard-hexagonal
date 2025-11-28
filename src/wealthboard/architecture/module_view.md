@@ -33,4 +33,12 @@ Module Dependency View
     S --> P
     S --> D
     UC --> S
+
+        %% Styles
+    style Domain fill:#2a9d8f,stroke:#264653,color:white
+    style Ports fill:#457b9d,stroke:#1d3557,color:white
+    style Services fill:#b5838d,stroke:#6d6875,color:white
+    style DrivenAdapters fill:#e76f51,stroke:#d62828,color:white
+    style UseCase fill:#8ac926,stroke:#6a994e,color:white
+
 ```
