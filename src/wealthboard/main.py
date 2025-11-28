@@ -14,7 +14,7 @@ from wealthboard.etf.adapters.driven.oracle_etf_history_repository import Oracle
 from wealthboard.etf.app.service.etf_history_service import ETFHistoryService
 from wealthboard.etf.app.use_cases.calculate_metrics import CalculateMetrics
 from wealthboard.etf.adapters.decorators.cache_owned_etf_repository import CacheOwnedETFRepository
-from wealthboard.etf.app.use_cases.portfolio_metrics import PortfolioMetrics
+from wealthboard.etf.app.use_cases.multiple_metrics import MultipleMetrics
 
 # === BASE SETUP ===
 load_dotenv()
@@ -44,14 +44,25 @@ history_service = ETFHistoryService(repo_history, price_provider)
 # === USE_CASE ===
 use_case_add_owned = AddOwnedETFUseCase(etf_service=etf_service, owned_service=owned_etf_service)
 use_case_metrics = CalculateMetrics(historical_service=history_service, owned_sevice=owned_etf_service)
-use_case_portfolio = PortfolioMetrics(owned_etf_service, use_case_metrics)
+use_case_portfolio = MultipleMetrics(owned_etf_service, use_case_metrics, history_service)
 
 to_use = use_case_portfolio.calculate_std_for_owned("01-JAN-2024")
 to_use_2 = use_case_portfolio.calculate_owned_moving_avg("01-AUG-2025")
+to_use_3 = use_case_portfolio.calculate_multiple_pct_returns(["EUNL.DE", "IS3N.DE"], "01-JAN-20")
 
-for k, v in to_use_2.items():
-    print(k, v)
-
+# for k, v in to_use_2.items():
+#     print(k, v)
+    
+for ticker, rends in to_use_3.items():
+    n = len(rends)
+    cumulative_factor = 1.0
+    for r in rends:
+        cumulative_factor *= (1 + r)
+    
+    geometric = cumulative_factor ** (1/n) - 1
+    annualized = (1 + geometric) ** 252 - 1
+    
+    print(f"{ticker}: {annualized * 100}")
 # for k, v in all_owned.items():
 #     print(k, v)
 

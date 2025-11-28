@@ -1,0 +1,36 @@
+Module Dependency View
+
+
+``` mermaid
+    flowchart BT
+
+
+        subgraph Domain
+            D{{etf, etf_history, owned_etf}}
+        end
+        
+        subgraph Ports
+            P{{etf_repository, etf_history_repository, owned_etf_repository}}
+        end
+
+        subgraph Services
+            S{{etf_service, etf_history_service, owned_etf_service}}
+        end
+        
+        subgraph DrivenAdapters
+            DRIVENA{{oracle_etf_repository, oracle_etf_history_repository, oracle_owned_etf_repository}}
+        end
+
+        subgraph UseCase
+            UC{{calculate_metrics, mutiple_metrics}}
+        end
+
+    style Domain fill: 
+
+    DRIVENA --> P
+    DRIVENA --> D
+    P --> D
+    S --> P
+    S --> D
+    UC --> S
+```
