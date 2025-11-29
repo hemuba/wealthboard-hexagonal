@@ -1,10 +1,10 @@
 from wealthboard.etf.app.service.etf_history_service import ETFHistoryService
 from wealthboard.etf.app.service.owned_etf_service import OwnedETFService
-from datetime import datetime
+
 
 class CalculateMetrics:
-    def __init__(self, owned_sevice: OwnedETFService, historical_service: ETFHistoryService):
-        self._owned_service = owned_sevice
+    def __init__(self, owned_service: OwnedETFService, historical_service: ETFHistoryService):
+        self._owned_service = owned_service
         self._historical_service = historical_service
         
     def calculate_percentage_return(self, ticker:str, from_date: str, to_date:str=None) -> list[float]:
@@ -17,7 +17,7 @@ class CalculateMetrics:
     def calculate_moving_average(self, ticker:str, from_date: str, to_date:str=None, K:int=None) -> list[float]:
         temporal_serie = self._historical_service.get_temporal_serie(ticker, from_date, to_date)
         windows_mmi = []
-        if not K:
+        if K is None:
             K = 2
         for i in range(len(temporal_serie) - K + 1):
             window = temporal_serie[i:i+K]

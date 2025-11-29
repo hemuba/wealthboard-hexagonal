@@ -1,7 +1,7 @@
 from wealthboard.common.infrastructure.db.oracle_connection_provider import OracleConnectionProvider
 from wealthboard.etf.app.ports.etf_history_repository import ETFHistoryRepository
 from wealthboard.etf.domain.etf_history import ETFHistory
-from datetime import datetime
+
 class OracleETFHistoryRepository(ETFHistoryRepository):
 
     

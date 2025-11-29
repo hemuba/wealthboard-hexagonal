@@ -8,7 +8,7 @@ class OracleOwnedETFRepository(OwnedETFRepository):
         
         self._provider = provider
         
-    def fetchAll(self) -> dict[OwnedETF.ticker, OwnedETF]:
+    def fetchAll(self) -> dict[str, OwnedETF]:
         conn = self._provider.get_oracledb_connection()
         cur = conn.cursor()
         cur.execute("""SELECT TICKER, NO_OF_SHARES, PURCHASE_PRICE FROM CURRENT_ETF""")
@@ -22,7 +22,19 @@ class OracleOwnedETFRepository(OwnedETFRepository):
         cur.close()
         conn.close()
         return ownedEtf
-        
+    
+    def findByTicker(self, ticker: str):
+        conn = self._provider.get_oracledb_connection()
+        cur = conn.cursor()
+        cur.execute("""SELECT TICKER, NO_OF_SHARES, PURCHASE_PRICE FROM CURRENT_ETF WHERE TICKER = :1""",
+        (ticker.upper(), ))
+        row= cur.fetchone()
+        if row is None:
+            raise ValueError(f"Ticker: {ticker.upper()} not found in your wallet")
+        ticker_db, no_of_shares, purchase_price = row
+        cur.close()
+        conn.close()
+        return OwnedETF(ticker_db, no_of_shares, purchase_price)
            
     def addEtf(self, etf:OwnedETF) -> None:
         conn = self._provider.get_oracledb_connection()

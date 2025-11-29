@@ -9,7 +9,7 @@ from wealthboard.etf.app.service.etf_service import ETFService
 from wealthboard.common.infrastructure.db.oracle_connection_provider import OracleConnectionProvider
 from wealthboard.etf.app.use_cases.add_owned_etf import AddOwnedETFUseCase
 from wealthboard.common.infrastructure.logging.log_config import setupLogging
-from wealthboard.etf.app.dto.owned_etf_dto import OwnedETFDTO
+from wealthboard.etf.app.dto.req_owned_dto import ReqOwnedDTO
 from wealthboard.etf.adapters.driven.oracle_etf_history_repository import OracleETFHistoryRepository
 from wealthboard.etf.app.service.etf_history_service import ETFHistoryService
 from wealthboard.etf.app.use_cases.calculate_metrics import CalculateMetrics
@@ -43,26 +43,16 @@ history_service = ETFHistoryService(repo_history, price_provider)
 
 # === USE_CASE ===
 use_case_add_owned = AddOwnedETFUseCase(etf_service=etf_service, owned_service=owned_etf_service)
-use_case_metrics = CalculateMetrics(historical_service=history_service, owned_sevice=owned_etf_service)
+use_case_metrics = CalculateMetrics(historical_service=history_service, owned_service=owned_etf_service)
 use_case_portfolio = MultipleMetrics(owned_etf_service, use_case_metrics, history_service)
 
 to_use = use_case_portfolio.calculate_std_for_owned("01-JAN-2024")
 to_use_2 = use_case_portfolio.calculate_owned_moving_avg("01-AUG-2025")
 to_use_3 = use_case_portfolio.calculate_multiple_pct_returns(["EUNL.DE", "IS3N.DE"], "01-JAN-20")
 
-# for k, v in to_use_2.items():
-#     print(k, v)
-    
-for ticker, rends in to_use_3.items():
-    n = len(rends)
-    cumulative_factor = 1.0
-    for r in rends:
-        cumulative_factor *= (1 + r)
-    
-    geometric = cumulative_factor ** (1/n) - 1
-    annualized = (1 + geometric) ** 252 - 1
-    
-    print(f"{ticker}: {annualized * 100}")
+
+for t in owned_etf_service.fetchAll():
+    print(t)
 # for k, v in all_owned.items():
 #     print(k, v)
 
