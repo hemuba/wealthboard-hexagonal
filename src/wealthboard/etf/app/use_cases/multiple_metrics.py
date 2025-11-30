@@ -14,7 +14,7 @@ class MultipleMetrics:
         self._history_service = history_service
         
     def calculate_std_for_owned(self, from_date: str, to_date:str=None) -> dict[str, float]:
-        etfs = self._owned_service.fetchAll()
+        etfs = self._owned_service.fetch_all()
         result_queue = Queue()
         threads = []
         
@@ -41,7 +41,7 @@ class MultipleMetrics:
         return results
     
     def calculate_owned_moving_avg(self, from_date:str, to_date:str=None, K:int=None):
-        etfs = self._owned_service.fetchAll()
+        etfs = self._owned_service.fetch_all()
         result_queue = Queue()
         threads = []
         

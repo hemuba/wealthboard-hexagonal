@@ -1,7 +1,7 @@
 from wealthboard.etf.app.service.etf_service import ETFService
 from wealthboard.etf.app.service.owned_etf_service import OwnedETFService
 from wealthboard.etf.app.dto.req_owned_dto import ReqOwnedDTO
-from wealthboard.etf.app.mapper.owned_etf_mapper import OwnedETFMapper
+from wealthboard.etf.app.mapper.etf_mapper import ETFMapper
 import logging
 
 
@@ -18,8 +18,8 @@ class AddOwnedETFUseCase:
             logger.error(f"Ticker {dto.ticker} cannot be found, hence can't be added to your wallet.")
             return
        
-        owned = OwnedETFMapper.to_entity(dto)
-        self._owned_etf_service.addEtf(owned)
+        owned = ETFMapper.owned_to_entity(dto)
+        self._owned_etf_service.add_etf(owned)
         logger.info(f"ETF {owned.ticker} added to your wallet.")
         
             

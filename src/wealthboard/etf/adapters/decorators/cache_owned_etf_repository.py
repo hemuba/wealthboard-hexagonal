@@ -17,6 +17,18 @@ class CacheOwnedETFRepository(OwnedETFRepository):
         print("CACHE MISS!")
         return data
     
+    def findByTicker(self, ticker: str) -> OwnedETF:
+
+        if self._cache is not None:
+            etf = self._cache.get(ticker.upper())
+            if etf is None:
+                raise ValueError(f"Ticker {ticker.upper()} not found in your wallet")
+            return etf
+        
+        etf = self._wrapped_repo.findByTicker(ticker)
+        return etf
+    
+
     def addEtf(self, etf: OwnedETF):
         self._wrapped_repo.addEtf(etf)
         self._cache = None

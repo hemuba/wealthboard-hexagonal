@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wealthboard - ETF History</title>
+</head>
+<body>
+    <h1>ETF History</h1>
+
+    <form id="history-form">
+        <label>
+            Ticker:
+            <input name="ticker" value="EUNL.DE">
+        </label>
+        <br>
+        <label>
+            From date:
+            <input name="from_date" placeholder="DD-MM-YYYY">
+        </label>
+        <br>
+        <label>
+            To date:
+            <input name="to_date" placeholder="optional">
+        </label>
+        <br>
+        <button type="submit">Carica</button>
+    </form>
+
+    <hr>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Ticker</th>
+                <th>Open Price</th>
+                <th>Close Price</th>
+                <th>Volume</th>
+            </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+    </table>
+
+    <script>
+        const form = document.getElementById("history-form");
+        const tbody = document.getElementById("results-body");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            tbody.innerHTML = "";
+
+            const data = new FormData(form);
+            const ticker = data.get("ticker");
+            const from_date = data.get("from_date");
+            const to_date = data.get("to_date");
+
+            const params = new URLSearchParams();
+            params.append("ticker", ticker);
+            params.append("from_date", from_date);
+            if (to_date) {
+                params.append("to_date", to_date);
+            }
+
+            const resp = await fetch("/etf-history/findByTickerAndDate/?" + params.toString());
+            const json = await resp.json();
+
+            for (const row of json) {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${row.data}</td>
+                    <td>${row.ticker}</td>
+                    <td>${row.open_price}</td>
+                    <td>${row.close_price}</td>
+                    <td>${row.volume}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        });
+    </script>
+</body>
+</html>

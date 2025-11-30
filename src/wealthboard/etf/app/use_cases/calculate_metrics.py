@@ -1,21 +1,21 @@
 from wealthboard.etf.app.service.etf_history_service import ETFHistoryService
 from wealthboard.etf.app.service.owned_etf_service import OwnedETFService
-
+from decimal import Decimal
 
 class CalculateMetrics:
     def __init__(self, owned_service: OwnedETFService, historical_service: ETFHistoryService):
         self._owned_service = owned_service
         self._historical_service = historical_service
         
-    def calculate_percentage_return(self, ticker:str, from_date: str, to_date:str=None) -> list[float]:
+    def calculate_percentage_return(self, ticker:str, from_date: str, to_date:str=None) -> list[Decimal]:
         pct_returns = [] 
-        temporal_serie = self._historical_service.get_temporal_serie(ticker, from_date, to_date) 
+        temporal_serie = self._historical_service.get_temporal_series(ticker, from_date, to_date)
         for i in range(1, len(temporal_serie)): 
             pct_returns.append(temporal_serie[i] / temporal_serie[i-1] - 1) 
         return pct_returns
   
-    def calculate_moving_average(self, ticker:str, from_date: str, to_date:str=None, K:int=None) -> list[float]:
-        temporal_serie = self._historical_service.get_temporal_serie(ticker, from_date, to_date)
+    def calculate_moving_average(self, ticker:str, from_date: str, to_date:str=None, K:int=None) -> list[Decimal]:
+        temporal_serie = self._historical_service.get_temporal_series(ticker, from_date, to_date)
         windows_mmi = []
         if K is None:
             K = 2
@@ -25,7 +25,7 @@ class CalculateMetrics:
         return windows_mmi
         
     
-    def calculate_std_deviation(self, ticker:str, from_date:str, to_date:str=None) -> float:
+    def calculate_std_deviation(self, ticker:str, from_date:str, to_date:str=None) -> Decimal:
       
         data = self.calculate_percentage_return(ticker, from_date, to_date)
         if len(data) < 2:
